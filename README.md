@@ -93,14 +93,29 @@ Cursor の設定 → Features → Model Context Protocol → Add new…
   - GITLAB_API_URL：http://gitlab.local:8929/api/v4
   - （任意）GITLAB_PROJECT_ID や GITLAB_ALLOWED_PROJECT_IDS で対象制限
 
-設定サンプル（Cursor の MCP 追加ダイアログに対応）や利用可能ツール一覧はパッケージ Readme が詳しいです。 
+設定サンプル（Cursor の MCP 追加ダイアログに対応）や利用可能ツール一覧はパッケージ Readme が詳しいです。
 [npm](https://www.npmjs.com/package/@zereight/mcp-gitlab)
 
-Cursor 側の MCP 追加方法の公式ドキュメントはこちら。 
+Cursor 側の MCP 追加方法の公式ドキュメントはこちら。
 [Cursor](https://docs.cursor.com/context/mcp)
 
-代替として、（Deprecated ですが）[@modelcontextprotocol/server-gitlab](https://www.npmjs.com/package/@modelcontextprotocol/server-gitlab) も同様の手順・環境変数で動きます。 
-[npm](https://www.npmjs.com/package/@modelcontextprotocol/server-gitlab)
+- 以下の設定を追加
+
+```json
+{
+  "mcpServers": {
+    "gitlab": {
+      "command": "npx",
+      "args": ["-y", "@zereight/mcp-gitlab"],
+      "env": {
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "<PERSONAL_ACCESS_TOKEN>",
+        "GITLAB_API_URL": "http://gitlab.local:8929/api/v4"
+      }
+    }
+  }
+}
+
+```
 
 ### 5) Cursor 上で操作してみる
 
@@ -116,3 +131,27 @@ MCP サーバーを追加すると、**「Tools」**に GitLab 系ツールが�
 例：
 
 「<YOUR_NAMESPACE>/demo の README.md に"セットアップ手順"を追記してコミットメッセージは docs: add setup にして」
+
+## デモ
+
+- Gtialbで作成したサンプルリポジトリをクローン
+
+- リクエスト
+
+```txt
+feature/sample-appを作成して、そのブランチで次の機能の開発をしてください。
+sample-appフォルダを作成して、
+その配下に、Nextjsをセットアップし、おしゃれな会社HPページを作成してください。
+作成が完了したらmainブランチに対してmcpサーバーを利用してMRリクエストを発行してください。
+```
+
+- MRを確認
+
+- MRをレビュー
+
+```txt
+MergeRequest #1をレビューし、
+指摘事項や改善点を教えて下さい。
+```
+
+- 指摘事項・改善点を確認する
